@@ -37,5 +37,5 @@ pip install -r requirements.txt
 4. Subir servidor django
 
 ```cmd
-python -m venv .ven
+python manage.py runserver
 ```
