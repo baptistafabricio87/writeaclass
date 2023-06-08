@@ -11,13 +11,10 @@ Function views
 """
 
 from django.urls import path
-from core.views import index, salas, contato, sobre, login, cadastro
+from core.views import index, contato, sobre
 
 urlpatterns = [
 	path('', index, name='index'),
-	path('salas/', salas, name='salas'),
 	path('contato/', contato, name='contato'),
 	path('sobre/', sobre, name='sobre'),
-	path('login', login, name='login'),
-	path('cadastro', cadastro, name='cadastro'),
 ]
