@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
+from django.template.defaultfilters import slugify
+
+from salas.models import Sala
+
 from accounts.validations import (
 	empty_field, 
 	registered_account, 
@@ -10,9 +14,9 @@ from accounts.validations import (
 
 def signup(request):
     if request.method == 'POST':
-        nome                  = request.POST['nome']
-        email                 = request.POST['email']
-        password              = request.POST['password']
+        nome = request.POST['nome']
+        email = request.POST['email']
+        password = request.POST['password']
         password_confirmation = request.POST['password_confirmation']
         
         error_count = 0
@@ -34,7 +38,7 @@ def signup(request):
         if error_count > 0:
             return redirect('accounts.signup')
         
-        user = User.objects.create_user(username=nome, email=email, password=password)
+        user = User.objects.create_user(username=nome, email=email, password=password, is_staff=True)
         user.save()
         messages.success(request, f"Usuário {user.username} cadastrado com sucesso!")
 
@@ -72,22 +76,14 @@ def dashboard(request):
         messages.error(request, 'Realize login para acessar a página \'Minhas Salas\'!')
         return redirect('login')
     
-    salas = Sala.objects.filter(pessoa=request.user.id).order_by('data_criacao')
+    salas = Sala.objects.filter(autor=request.user.id).order_by('criado_em')
 
     dados = {'salas': salas}
     
     return render(request, template_name, dados)
 
 
-def nova_aula(request):
-    template_name = 'accounts/nova_aula.html'
-
-    if request.method == 'POST':
-        
-
-    return render(request, template_name)
-
-
 def logout(request):
     auth.logout(request)
-    return redirect('core.index')
+    print('logout realizado')
+    return redirect('index')
