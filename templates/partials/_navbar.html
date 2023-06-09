@@ -1,5 +1,4 @@
 {% load static %}
-
     <nav class="navbar navbar-expand-lg bg-body-tertiary main-header">
         <div class="container-fluid">
             <a class="navbar-brand margin-a-nav" href="{% url 'index' %}">
@@ -11,13 +10,40 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            {% if user.is_authenticated %}
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-ul">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'sobre' %}">Sobre Nós</a>
+                        <a class="nav-link" href="{% url 'salas' %}">Salas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+                    </li>
+                </ul>
+
+                <div class="user-wrapper d-flex">
+                    <a class="nav-link d-flex" href="{% url 'logout' %}">
+                        <ion-icon name="log-out-outline" class="user-icon">
+                        </ion-icon>
+                    </a>
+                </div>
+
+            {% else %}
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-ul">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'salas' %}">Salas</a>
@@ -25,14 +51,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'contato' %}">Contato</a>
                     </li>
-
                 </ul>
-                <div class="user-wrapper">
-                    <a class="nav-link" href="{% url 'login' %}"><ion-icon name="person-circle-outline"
-                            class="user-icon"></ion-icon></a>
-                </div>
 
-                <form class="d-flex" role="search">
+                <div class="user-wrapper d-flex">
+                    <a class="nav-link d-flex" href="{% url 'login' %}">
+                        <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
+                    </a>
+                </div>
+                {% endif %}
+
+                <form action="" method="" class="d-flex" role="search">
+                    {% csrf_token %}
                     <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn" type="submit"><ion-icon name="search-outline"></ion-icon></button>
                 </form>

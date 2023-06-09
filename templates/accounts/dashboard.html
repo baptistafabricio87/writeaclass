@@ -2,39 +2,32 @@
 {% load static %}
 {% block content %}
 
-<div class="contact-area section-padding-0-80">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading">
-                        <h3>Olá {{ user.username }}</h3>
-                    </div>
+<section class="main-card-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3 class="yellow-var">Olá {{ user.username | upper }}</h3>
                 </div>
-
-                {% if salas %}
-                    {% for sala in salas %}
-                        <div class="col-12 col-sm-6 col-lg-4">
-                            <div class="single-best-receipe-area mb-30">
-                                {% if sala.foto == '' %}
-                                    <img src="{% static 'img/1-avatar.jpg' %}" alt="">
-                                {% else %}
-                                    <img src="{{ sala.foto.url }}" alt="">
-                                {% endif %}
-                                <div class="receipe-content">
-                                    <a href="{% url 'salas.show' sala.id %}">
-                                        <h5>{{ sala }}</h5>
-                                    </a>
-                                    <a href="{% url 'salas.edit' sala.id %}" type="button" class="btn btn-info mr-2"><i class="fas fa-edit"></i></a>
-                                    <a href="{% url 'salas.destroy' sala.id %}" type="button" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>Não foram encontradas salas.</p>
-                {% endif %}
             </div>
+
+            {% if salas %}
+                {% for sala in salas %}
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-best-receipe-area mb-30">
+                            <h3>Sala {{ sala.nome }}</h3>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h3>Não foram encontradas salas.</h3>
+            {% endif %}
         </div>
     </div>
+</section>
 
 {% endblock content %}
+                                <!--
+                                    <a href="{% url 'salas.edit' sala.id %}" type="button" class="btn btn-info mr-2"><i class="fas fa-edit"></i></a>
+                                    <a href="{% url 'salas.destroy' sala.id %}" type="button" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                -->
