@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import get_object_or_404, render
+
 
 from salas.models import Sala, Aula, Comentario
 
 # Create your views here.
 def listar_salas(request):
-	template_name = 'salas.html'
-	object_list = Sala.objects.order_by('-criado_em')
-	paginator = Paginator(object_list, 3)  # 3 objects in each page
+    template_name = 'salas.html'
+    object_list = Sala.objects.order_by('-criado_em')
+    paginator = Paginator(object_list, 3)  # 3 objects in each page
     page = request.GET.get('page')
     
     try:
@@ -24,7 +26,7 @@ def listar_salas(request):
 
 
 def listar_aulas(request):
-	template_name = 'aulas.html'
+    template_name = 'aulas.html'
     object_list = Aula.objects.filter(publicado=True).order_by('-criado_em')
     paginator = Paginator(object_list, 3)  # 3 posts in each page
     page = request.GET.get('page')
